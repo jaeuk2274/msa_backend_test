@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/easyboard-backend_blank" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/6.1.1/libexec" />
+        <option name="gradleJvm" value="15" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/easyboard-backend_blank" />
+            <option value="$PROJECT_DIR$/easyboard-backend_blank/easyboard-aggregate" />
+            <option value="$PROJECT_DIR$/easyboard-backend_blank/easyboard-boot" />
+            <option value="$PROJECT_DIR$/easyboard-backend_blank/easyboard-event" />
+            <option value="$PROJECT_DIR$/easyboard-backend_blank/easyboard-facade" />
+            <option value="$PROJECT_DIR$/easyboard-backend_blank/easyboard-flow" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

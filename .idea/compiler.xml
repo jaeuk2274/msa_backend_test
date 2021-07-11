@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="drama-easyboard.easyboard-aggregate" target="11" />
+      <module name="drama-easyboard.easyboard-aggregate.main" target="11" />
+      <module name="drama-easyboard.easyboard-aggregate.test" target="11" />
+      <module name="drama-easyboard.easyboard-boot" target="11" />
+      <module name="drama-easyboard.easyboard-boot.main" target="11" />
+      <module name="drama-easyboard.easyboard-boot.test" target="11" />
+      <module name="drama-easyboard.easyboard-event" target="11" />
+      <module name="drama-easyboard.easyboard-event.main" target="11" />
+      <module name="drama-easyboard.easyboard-event.test" target="11" />
+      <module name="drama-easyboard.easyboard-facade" target="11" />
+      <module name="drama-easyboard.easyboard-facade.main" target="11" />
+      <module name="drama-easyboard.easyboard-facade.test" target="11" />
+      <module name="drama-easyboard.easyboard-flow" target="11" />
+      <module name="drama-easyboard.easyboard-flow.main" target="11" />
+      <module name="drama-easyboard.easyboard-flow.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

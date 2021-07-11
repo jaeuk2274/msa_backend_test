@@ -5,30 +5,30 @@
 */
 package io.naradrama.easyboard.aggregate.posting.store.maria;
 
-import org.springframework.stereotype.Repository;
-import io.naradrama.easyboard.aggregate.posting.store.PostingStore;
-import io.naradrama.easyboard.aggregate.posting.store.maria.repository.PostingMariaRepository;
 import io.naradrama.easyboard.aggregate.posting.domain.entity.Posting;
+import io.naradrama.easyboard.aggregate.posting.store.PostingStore;
 import io.naradrama.easyboard.aggregate.posting.store.maria.jpo.PostingJpo;
-import java.util.Optional;
-import java.util.List;
+import io.naradrama.easyboard.aggregate.posting.store.maria.repository.PostingMariaRepository;
 import io.naradrama.prologue.domain.Offset;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import static io.naradrama.easyboard.aggregate.posting.store.maria.jpo.PostingJpo.toDomains;
 
 @Repository
-public class PostingMariaStore {
+@RequiredArgsConstructor // final field DI
+public class PostingMariaStore implements PostingStore {
     /* Autogen by nara studio */
+    private final PostingMariaRepository postingMariaRepository;
 
     // TODO: Follow structure
     //   1. Implement Repository PostingStore components.
     //   2. PostingMariaRepository receives as Dependency Injection.
-
-
-
 
     private Pageable createPageable(Offset offset) {
         /* Autogen by nara studio */
@@ -39,18 +39,64 @@ public class PostingMariaStore {
         }
     }
 
+    @Override
+    public void create(Posting posting) {
+        //
+        postingMariaRepository.save(new PostingJpo(posting));
+    }
+
+    @Override
+    public Posting retrieve(String id) {
+        //
+        return postingMariaRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Posting Not Found " + id))
+                .toDomain();
+    }
+
+    @Override
+    public List<Posting> retrieveAll(Offset offset) {
+        //
+        Pageable pageable = createPageable(offset);
+        return toDomains(postingMariaRepository.findAll(pageable).getContent());
+    }
+
+    @Override
+    public void update(Posting posting) {
+        //
+        postingMariaRepository.save(new PostingJpo(posting));
+    }
+
+    @Override
+    public void delete(Posting posting) {
+        //
+        postingMariaRepository.delete(new PostingJpo(posting));
+    }
+
+    @Override
+    public void delete(String id) {
+        //
+        postingMariaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean exists(String id) {
+        //
+        return postingMariaRepository.existsById(id);
+    }
+
     // INFO: throws the without comment and use just it.
-/*
     @Override
     public List<Posting> retrieveAllByBoardId(String boardId) {
-
-        return PostingJpo.toDomains(postingMariaRepository.findAllByBoardId(boardId));
+        //
+        return toDomains(postingMariaRepository.findAllByBoardId(boardId));
     }
 
     @Override
     public List<Posting> deleteByBoardId(String boardId) {
-
-        return PostingJpo.toDomains(postingMariaRepository.deleteByBoardId(boardId));
+        //
+        return toDomains(postingMariaRepository.deleteByBoardId(boardId));
     }
-   */
+
+
+
 }

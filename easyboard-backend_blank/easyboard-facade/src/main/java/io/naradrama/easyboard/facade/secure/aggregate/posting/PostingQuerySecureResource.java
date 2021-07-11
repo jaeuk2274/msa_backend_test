@@ -19,7 +19,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 
-public class PostingQuerySecureResource  {
+@RequestMapping("/secure/posting/query")
+@RestController
+public class PostingQuerySecureResource implements PostingQueryFacade {
+    //
+    private PostingStore postingStore;
+    private RdbQueryRequest<PostingJpo> rdbQueryRequest;
+
+    public PostingQuerySecureResource(PostingStore postingStore, EntityManager entityManager){
+        this.postingStore = postingStore;
+        this.rdbQueryRequest = new RdbQueryRequest<>(entityManager);
+    }
+
+    @PostMapping("/")
+    public PostingQuery execute(@RequestBody PostingQuery postingQuery) {
+        postingQuery.execute(postingStore);
+        return postingQuery;
+    }
+
+    @PostMapping("/dynamic-single")
+    public PostingDynamicQuery execute(@RequestBody PostingDynamicQuery postingDynamicQuery) {
+        //
+        postingDynamicQuery.execute(rdbQueryRequest);
+        return postingDynamicQuery;
+    }
+
+    @PostMapping("/dynamic-multi")
+    public PostingsDynamicQuery execute(@RequestBody PostingsDynamicQuery postingsDynamicQuery) {
+        //
+        postingsDynamicQuery.execute(rdbQueryRequest);
+        return postingsDynamicQuery;
+    }
+
 
     // Info: Just follow structure and fixed in PostingQuerySecureResource(a., b.)
     //  a. The extract APIs from PostingQueryResource which are used by Frontend project

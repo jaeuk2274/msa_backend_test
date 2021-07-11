@@ -5,11 +5,51 @@
 */
 package io.naradrama.easyboard.aggregate.posting.api.query.rest;
 
+import io.naradrama.easyboard.aggregate.posting.api.query.query.PostingDynamicQuery;
+import io.naradrama.easyboard.aggregate.posting.api.query.query.PostingQuery;
+import io.naradrama.easyboard.aggregate.posting.api.query.query.PostingsDynamicQuery;
+import io.naradrama.easyboard.aggregate.posting.store.PostingStore;
+import io.naradrama.easyboard.aggregate.posting.store.maria.jpo.PostingJpo;
+import io.naradrama.prologue.util.query.RdbQueryRequest;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManager;
 
-public class PostingQueryResource  {
+@RequestMapping("/aggregate/posting/query")
+@RestController
+public class PostingQueryResource implements PostingQueryFacade {
     //
+    private PostingStore postingStore;
+    private RdbQueryRequest<PostingJpo> rdbQueryRequest;
+
+    public PostingQueryResource(PostingStore postingStore, EntityManager entityManager){
+        this.postingStore = postingStore;
+        this.rdbQueryRequest = new RdbQueryRequest<>(entityManager);
+    }
+
+    @PostMapping("/")
+    public PostingQuery execute(@RequestBody PostingQuery postingQuery) {
+        //
+        postingQuery.execute(postingStore);
+        return postingQuery;
+    }
+
+    @PostMapping("/dynamic-single")
+    public PostingDynamicQuery execute(@RequestBody PostingDynamicQuery postingDynamicQuery) {
+        //
+        postingDynamicQuery.execute(rdbQueryRequest);
+        return postingDynamicQuery;
+    }
+
+    @PostMapping("/dynamic-multi")
+    public PostingsDynamicQuery execute(@RequestBody PostingsDynamicQuery postingsDynamicQuery) {
+        //
+        postingsDynamicQuery.execute(rdbQueryRequest);
+        return postingsDynamicQuery;
+    }
 
 
     // Info: Just follow structure and fixed in PostingQueryResource(a., b., c.)

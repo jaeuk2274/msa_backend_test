@@ -5,7 +5,8 @@
 */
 package io.naradrama.easyboard.facade.secure.flow.posting;
 
-import io.naradrama.easyboard.flow.posting.api.command.command.*;
+import io.naradrama.easyboard.flow.posting.api.command.command.RegisterPostingCommand;
+import io.naradrama.easyboard.flow.posting.api.command.command.RemovePostingCommand;
 import io.naradrama.easyboard.flow.posting.api.command.rest.PostingFlowFacade;
 import io.naradrama.easyboard.flow.posting.domain.logic.PostingFlowLogic;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,14 @@ public class PostingFlowSecureResource implements PostingFlowFacade {
     @Override
     @PostMapping("/register-posting")
     public RegisterPostingCommand registerPosting(@RequestBody RegisterPostingCommand command) {
+        //
         return postingFlowLogic.registerPosting(command);
     }
 
     @Override
     @PostMapping("/remove-posting")
     public RemovePostingCommand removePosting(@RequestBody RemovePostingCommand command) {
+        //
         return postingFlowLogic.removePosting(command);
     }
 }

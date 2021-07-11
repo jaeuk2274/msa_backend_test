@@ -5,6 +5,8 @@
 */
 package io.naradrama.easyboard.aggregate.posting.store.maria.repository;
 
+import io.naradrama.easyboard.aggregate.posting.domain.entity.Posting;
+import io.naradrama.easyboard.aggregate.posting.store.maria.jpo.BoardJpo;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import io.naradrama.easyboard.aggregate.posting.store.maria.jpo.PostingJpo;
 import org.springframework.data.domain.Page;
@@ -15,4 +17,8 @@ public interface PostingMariaRepository extends PagingAndSortingRepository<Posti
 
     // TODO : follow the structure
     // 1. Declare some methods which are required by PostingMariaStore
+
+    List<PostingJpo> findAllByBoardId(String boardId);
+    List<PostingJpo> deleteByBoardId(String boardId);
+
 }

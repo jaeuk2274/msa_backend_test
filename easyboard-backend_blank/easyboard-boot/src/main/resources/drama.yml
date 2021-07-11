@@ -1,0 +1,6 @@
+dramaId: '9000'
+version: 0.11.0
+note: easyboard
+
+domainSpecPackage: io.naradrama.easyboard.securefacade.secure
+domainJarPrefix: easyboard-secure-facade

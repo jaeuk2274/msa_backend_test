@@ -1,0 +1,123 @@
+.root {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.heading {
+    font-size: medium;
+    font-weight: bold;
+}
+
+.paper {
+    padding: 16px;
+    text-align: center;
+    color: black;
+}
+
+.title {
+    padding: 16px;
+    text-align: center;
+    background-color: #82C4A2FF;
+    color: white;
+    font-size: large;
+}
+
+.subTitle {
+  padding: 16px;
+  text-align: left;
+  background-color: #82C4A2FF;
+  color: white;
+  font-size: medium;
+}
+
+.control {
+    padding: 0;
+    text-align: center;
+}
+
+.postArea {
+    padding: 8px;
+    text-align: left;
+    background-color: #DDE2E3FF;
+    min-height: 100vh;
+    height: 100%;
+}
+
+.cardArea {
+    width: 100%;
+    min-width: 240px;
+    margin-bottom: 8px;
+}
+
+.cardActionsArea {
+    text-align: right;
+}
+
+.avatar {
+    background-color: #DD3E13FF;
+}
+
+.button {
+    font-size: small;
+}
+
+.menuListArea {
+    width: 120px;
+}
+
+.menuItemArea {
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.postBtn {
+    text-align: right;
+    '& > *': margin: 8px;
+    margin: 10px;
+}
+
+.boardCtrlBtn {
+    font-size: 1rem;
+    height: 50px;
+}
+
+.boardButton {
+    font-size: 2rem;
+    font-weight: bold;
+    height: 50px;
+}
+
+.noDecoration {
+    text-decoration: none;
+}
+
+.textFieldArea {
+    vertical-align: top;
+    width: 100%;
+}
+
+.contentTextField{
+    min-height: 160px !important;
+    display: grid !important;
+}
+
+.contentTextFieldRed *{
+    border-color:red !important;
+}
+
+/* dialog 세로 스크롤바 없애기 위해 */
+.MuiDialogContent-root {
+    overflow-y: hidden !important;
+}
+
+/* TextField content 부분 text 정렬을 top으로 하기 위해 */
+.MuiOutlinedInput-multiline {
+    vertical-align: text-top !important;
+    display: block !important;
+}
+
+.list {
+    list-style: none;
+}

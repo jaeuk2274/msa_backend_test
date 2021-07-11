@@ -1,0 +1,116 @@
+plugins {
+    id "maven"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
+ext {
+    feedbackVersion = "0.11.0-SNAPSHOT"
+    prologueVersion = "0.11.0-SNAPSHOT"
+
+    springBootGradlePluginVersion = "2.4.2"
+    springBootVersion = "2.4.2"
+    springCloudVersion = "Greenwich.RELEASE"
+    springCloudStreamVersion = "Greenwich.RELEASE"
+
+    lombokVersion = "1.18.10"
+    jUnitBomVersion = "5.6.2"
+    mockitoCoreVersion = "3.1.0"
+    mockitoJupiterVersion = "3.1.0"
+
+    swaggerVersion = "2.9.2"
+}
+
+allprojects {
+    group "io.naraplatform"
+    version feedbackVersion
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+}
+
+def useMavenLocalFirst = false
+def nexusBaseUrl = "http://58.225.16.61/repository/"
+
+def nexususer = 'nextree'
+def nexuspassword = 'bizadmin1!!'
+
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "maven-publish"
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+    task copyDependencies(type: Copy) {
+        from configurations.default
+        into "../nara-studio/external-lib"
+    }
+
+    repositories {
+        if (useMavenLocalFirst) {
+            mavenLocal()
+        }
+
+        maven {
+            credentials {
+                username = "posco-ict-student"
+                password = "poscoictstudent"
+            }
+            url "${nexusBaseUrl}/nara-public/"
+        }
+
+        if (!useMavenLocalFirst) {
+            mavenLocal()
+        }
+
+        jcenter()
+    }
+
+    publishing {
+        repositories {
+            maven {
+                credentials {
+                    username = System.getenv("NEXUS_ID")?: nexususer
+                    password = System.getenv("NEXUS_PASSWORD")?: nexuspassword
+                }
+
+                def releasesRepoUrl = nexusBaseUrl + "/nara-releases"
+                def snapshotsRepoUrl = nexusBaseUrl + "/nara-snapshots"
+
+                url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+            }
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        }
+    }
+
+    dependencies {
+        implementation("io.naradrama:prologue:${prologueVersion}")
+
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+        testCompile("org.springframework.boot:spring-boot-starter-test")
+        testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+        testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        testImplementation("org.springframework.boot:spring-boot-starter-test") {exclude module: "junit"}
+        testImplementation(platform("org.junit:junit-bom:${jUnitBomVersion}"))
+        testImplementation("org.junit.jupiter:junit-jupiter")
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    clean {
+        // delete file("src/main/generated")
+    }
+}

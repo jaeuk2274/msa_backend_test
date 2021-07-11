@@ -1,0 +1,8 @@
+#Fri Jun 18 10:57:07 KST 2021
+storeType=MongoDB
+groupId=io.naradrama
+skipEvent=false
+technologyStack=Backend
+projectTemplate=CQRS
+projectBuild=Gradle
+createEmbed=false

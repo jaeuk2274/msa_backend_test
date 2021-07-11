@@ -1,0 +1,7 @@
+dependencies {
+    api project(":easyboard-aggregate")
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+}

@@ -1,0 +1,8 @@
+#Thu Jun 17 15:23:50 KST 2021
+storeType=MariaDB
+groupId=io.naradrama
+skipEvent=false
+technologyStack=Backend
+projectTemplate=CQRS
+projectBuild=Gradle
+createEmbed=false

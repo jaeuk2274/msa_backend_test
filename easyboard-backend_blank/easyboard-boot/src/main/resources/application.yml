@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: easyboard
+  profiles:
+    active: default
+  datasource:
+    url: jdbc:h2:mem:easyboard
+    driverClassName: org.h2.Driver
+    username: easy
+    password: admin321
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: update
+
+
+  redis:
+    host: localhost
+    port: 6379
+
+server:
+  port: 9020

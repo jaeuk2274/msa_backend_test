@@ -1,0 +1,6 @@
+rootProject.name = 'drama-easyboard'
+include 'easyboard-aggregate'
+include 'easyboard-flow'
+include 'easyboard-facade'
+include 'easyboard-boot'
+include 'easyboard-event'

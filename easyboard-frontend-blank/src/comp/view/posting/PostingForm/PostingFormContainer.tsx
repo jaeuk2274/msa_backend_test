@@ -63,6 +63,7 @@ class PostingFormContainer extends ReactComponent<Props, {}, InjectedProps> {
     //  2. props의 postingId가 undefined일 경우, boardId, userId, writerName으로 posting 설정
     const { postingId } = this.propsWithDefault;
     const { postingStateKeeper } = this.injected;
+
     if(postingId){
       postingStateKeeper.findPostingById(postingId);
     } else {
@@ -96,7 +97,7 @@ class PostingFormContainer extends ReactComponent<Props, {}, InjectedProps> {
     }
 
     // TODO: Posting 저장 후 결과에 따라 onSuccess/onFail 실행
-    postingStateKeeper.register(posting)
+    postingStateKeeper.save(posting)
                       .then(onSuccess)
                       .catch(onFail);
 

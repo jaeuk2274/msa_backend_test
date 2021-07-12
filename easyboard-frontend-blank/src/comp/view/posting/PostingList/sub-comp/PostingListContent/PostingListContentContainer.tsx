@@ -7,7 +7,6 @@ import { PostingsStateKeeper, PostingStateKeeper } from '~/comp/state';
 import PostingListContext from '../../context/PostingListContext';
 import PostingDetailView from './view/PostingDetailView';
 
-
 interface Props {
   //
   onClickEdit?: (postingId: string) => void;
@@ -27,8 +26,8 @@ class PostingListContentContainer extends ReactComponent<Props, {}, InjectedProp
   //
   static defaultProps = {
     onClickEdit: () => {},
-    onSuccess: () => {},
-    onFail: () => {},
+    onSuccess: () => {console.log("default onSuccess")},
+    onFail: () => {console.log("default onFail")},
   };
 
   static contextType = PostingListContext;
@@ -54,10 +53,12 @@ class PostingListContentContainer extends ReactComponent<Props, {}, InjectedProp
     //
     const { postingStateKeeper } = this.injected;
     const { onSuccess, onFail } = this.propsWithDefault;
+    const { postingList } = this.context;
 
     postingStateKeeper.remove(postingId)
-      .then(onSuccess)
-      .catch(onFail);
+                      .then(onSuccess)
+                      .catch(onFail)
+                      .finally(postingList.init);
   }
 
   onModify(success: boolean) {

@@ -33,8 +33,6 @@ class HeaderView extends ReactComponent<Props> {
     const { anonymous, renderAction } = this.propsWithDefault;
     const { posting } = this.context.postingDetail;
 
-    console.log(posting);
-
     return (
       <Card.Header
         disableTypography

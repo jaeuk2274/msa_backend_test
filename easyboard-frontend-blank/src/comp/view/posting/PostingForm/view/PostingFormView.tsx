@@ -9,6 +9,7 @@ import { PostingFormBase } from '~/comp/view/shared';
 interface Props {
   title: string;
   content: string;
+  boardId?: string;
   maxLength: number;
   rows: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

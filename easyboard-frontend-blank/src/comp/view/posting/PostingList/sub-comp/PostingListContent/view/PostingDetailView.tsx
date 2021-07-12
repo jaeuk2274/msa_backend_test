@@ -6,6 +6,7 @@ import { Box } from '@nara.platform/react-ui';
 import { Posting } from '~/comp/api';
 import { PostingAction } from '~/comp/view/shared';
 import PostingDetail from '../../../../PostingDetail';
+import {PostingForm} from "~/comp/view";
 
 
 interface Props {
@@ -28,7 +29,7 @@ class PostingDetailView extends ReactComponent<Props> {
   //
   render() {
     //
-    const { userId, posting, anonymous, onClickEdit, onClickRemove } = this.props;
+    const { userId, posting, anonymous, onClickEdit, onClickRemove, onModify, onClickReplies } = this.props;
 
     return (
       <Box mb={2}>
@@ -43,7 +44,23 @@ class PostingDetailView extends ReactComponent<Props> {
               />
             )}
           />
-          <PostingDetail.Content />
+
+          {/* NOTE: list content editing */}
+          { posting.editing
+            ? (<PostingForm
+              postingId={posting.id}
+              boardId={posting.boardId}
+              userId={userId}
+              writerName={posting.writerName}
+              onClickList={() => onModify(false)}
+              onSuccess={() => onModify(true)}
+              onFail={() => onModify(false)}
+            />)
+            : (<PostingDetail.Content/>)
+          }
+
+
+
         </PostingDetail>
       </Box>
     );

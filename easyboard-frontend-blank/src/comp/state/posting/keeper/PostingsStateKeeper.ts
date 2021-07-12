@@ -72,9 +72,9 @@ class PostingsStateKeeper {
 
   setPostingsProp(postingId: string, name: keyof Posting, value: any) {
     // TODO: postingId로 게시글 단건의 property 수정
-    this.postings = this.postings.map(posting => 
-      (posting.id === postingId 
-      ? { ...posting, [name]: value} as Posting 
+    this.postings = this.postings.map(posting =>
+      (posting.id === postingId
+      ? { ...posting, [name]: value} as Posting
       : posting)
     )
   }

@@ -43,6 +43,15 @@ class PostingStateKeeper {
     makeExtendedObservable(this);
   }
 
+  async save(posting: Posting): Promise<CommandResponse> {
+    //
+    if(!posting.id){
+      return this.register(PostingCdo.fromModel(posting));
+    } else{
+      return this.modify(posting.id, Posting.asNameValues(posting));
+    }
+  }
+
   async register(postingCdo: PostingCdo): Promise<CommandResponse> {
     return this.postingFlowApi.registerPosting(postingCdo);
   }

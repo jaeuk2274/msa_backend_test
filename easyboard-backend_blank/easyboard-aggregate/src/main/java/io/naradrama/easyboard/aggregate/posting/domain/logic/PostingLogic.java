@@ -85,9 +85,7 @@ public class PostingLogic {
         // TODO:
         //   1. Find post entity by optimal query condition
         //   2. If result was empty, throw exception in the conditional case
-        // NOTE:
-        // 1.CrudRepository에서 이미 Optional로 받으니 postingMariaStore 에서 널체크
-        // 2.서비스에서도 optional 로 받고 처리했으면 여기서 처리 -> 기타 테스트코드 깨져서 놔둠.
+        // NOTE: CrudRepository에서 이미 Optional로 받으니 postingMariaStore 에서 널체크
         return postingMariaStore.retrieve(postingId);
     }
 

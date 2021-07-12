@@ -27,31 +27,8 @@ public class PostingFlowLogic {
 
     public RegisterPostingCommand registerPosting(RegisterPostingCommand command) {
         //
-
-
-
-
-
         PostingCdo postingCdo = command.getPostingCdo();
-
-
-        System.out.println("1 : " + postingCdo.getBoardId());
-        PostingCdo postingCdo1 = command.getPostingCdo();
-        System.out.println("2 : " + postingCdo1.getBoardId());
-        PostingCdo postingCdo2 = command.getPostingCdo();
-        System.out.println("3 : " + postingCdo2.getBoardId());
-
-        List<PostingCdo> p = new ArrayList<PostingCdo>();
-        p.add(postingCdo);
-        p.add(postingCdo1);
-        p.add(postingCdo2);
-
-        postingLogic.registerPostings(p);
-
-
-
         String postingId = postingLogic.registerPosting(postingCdo);
-
         command.setCommandResponse(new CommandResponse(postingId));
         return command;
     }

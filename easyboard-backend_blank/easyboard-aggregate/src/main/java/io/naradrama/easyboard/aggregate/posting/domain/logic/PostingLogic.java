@@ -65,7 +65,9 @@ public class PostingLogic {
         //  1. Save entity from cdo when entity was not exists
         //  2. Return registered entity's id
         Posting posting = new Posting(postingCdo);
+        // TODO
         postingMariaStore.create(posting);
+
         return posting.getId();
     }
 

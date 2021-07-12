@@ -19,8 +19,9 @@ class PostingListPage extends ReactComponent<Props> {
 
   routeToEdit(postingId: string) {
     // TODO: 게시글 수정 페이지로 이동
+    console.log(`routeToEdit - /postings/edit/${postingId}`);
     const { router } = this.props;
-    router.push('/postings/edot');
+    router.push(`/postings/edit/${postingId}`);
   }
 
   routeToRegistration() {

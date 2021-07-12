@@ -8,6 +8,8 @@ import { Delete, Edit, MoreVert } from '@material-ui/icons';
 interface Props {
   //
   postingId: string;
+  onClickEdit: (id: string) => void;
+  onClickRemove: (id: string) => void;
 }
 
 @autobind
@@ -15,7 +17,7 @@ class PostingActionView extends ReactComponent<Props> {
   //
   render() {
     //
-    const { postingId } = this.props;
+    const { postingId, onClickEdit, onClickRemove } = this.props;
 
     return (
       <Menu
@@ -30,6 +32,7 @@ class PostingActionView extends ReactComponent<Props> {
         <Menu.Item
           onClick={(event: React.MouseEvent, params: MenuTypes.ClickItemParams) => {
             params.close();
+            onClickEdit(postingId);
           }}
         >
           <List.ItemIcon><Edit /></List.ItemIcon>
@@ -38,6 +41,7 @@ class PostingActionView extends ReactComponent<Props> {
         <Menu.Item
           onClick={(event: React.MouseEvent, params: MenuTypes.ClickItemParams) => {
             params.close();
+            onClickRemove(postingId);
           }}
         >
           <List.ItemIcon><Delete /></List.ItemIcon>

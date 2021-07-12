@@ -60,6 +60,7 @@ class PostingListContainer extends ReactComponent<Props, {}, InjectedProps> {
 
   async init(sortDirection?: SortDirection) {
     //
+    console.log("PostingListContainer-init start");
     const { onInit } = this.propsWithDefault;
     const { sourceEntityId } = this.props;
     const { limit, showDeleted } = this.propsWithDefault;
@@ -74,10 +75,30 @@ class PostingListContainer extends ReactComponent<Props, {}, InjectedProps> {
 
     // TODO: 특정 조건을 만족할 경우, 게시글 목록에서 삭제된 글까지 확인할 수 있도록 허용하는 코드 구현
 
+    console.log("showDeleted : " + showDeleted);
+    if(showDeleted){
+      const postingList = await postingsStateKeeper.findNotDeletedPostingsByBoardId(sourceEntityId, targetOffset);
+      console.log("1 postingList");
+      console.log(postingList);
+      onInit(postingList.totalCount);
+    } else{
+      const postingList = await postingsStateKeeper.findPostingsByBoardId(sourceEntityId, targetOffset);
+      console.log("2 postingList");
+      console.log(postingList);
+      onInit(postingList.totalCount);
+    }
+    console.log("PostingListContainer-init end");
+    /*
+    const postingList = postingsStateKeeper.findPostingsByBoardId(sourceEntityId, offset).then(e->onInit(e.total));
+    onInit((await postingList).totalCount);
+    */
+    // TODO
+
   }
 
   getContext(): PostingListContextModel {
     //
+    console.log("PostingListContainer-getContext start");
     const { sourceEntityId, sourceEntityName, userId, writerName } = this.props;
 
     return {
@@ -94,6 +115,7 @@ class PostingListContainer extends ReactComponent<Props, {}, InjectedProps> {
 
   findMorePostings() {
     //
+    console.log("PostingListContainer-findMorePostings start");
     const { sourceEntityId } = this.props;
     const { postingsStateKeeper } = this.injected;
     const { offset } = postingsStateKeeper;

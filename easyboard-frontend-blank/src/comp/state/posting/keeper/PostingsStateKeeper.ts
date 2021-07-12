@@ -40,7 +40,6 @@ class PostingsStateKeeper {
     const query = PostingsDynamicQuery.oneParam<Posting>(
       QueryParam.endParam('boardId', Operator.Equal, boardId)
     );
-
     query.offset = offset;
 
     return this.findPostings(query);
@@ -61,7 +60,6 @@ class PostingsStateKeeper {
   private async findPostings(query: PostingsDynamicQuery): Promise<OffsetElementList<Posting>> {
     //
     const postingsOffsetElementList = await this.postingQueryApi.executePostingsDynamicPagingQuery(query);
-
     query.offset.totalCount = postingsOffsetElementList.totalCount;
 
     runInAction(() => {
@@ -73,10 +71,12 @@ class PostingsStateKeeper {
   }
 
   setPostingsProp(postingId: string, name: keyof Posting, value: any) {
-    //
-
     // TODO: postingId로 게시글 단건의 property 수정
-
+    this.postings = this.postings.map(posting => 
+      (posting.id === postingId 
+      ? { ...posting, [name]: value} as Posting 
+      : posting)
+    )
   }
 
   clear() {

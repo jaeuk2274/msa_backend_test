@@ -16,6 +16,8 @@ interface Props {
   posting: Posting;
   anonymous: boolean;
   onClickReplies: (posting: Posting) => void;
+  onClickEdit: (id: string) => void;
+  onClickRemove: (id: string) => void;
   onModify: (success: boolean) => void;
   writerName: string;
 }
@@ -26,7 +28,7 @@ class PostingDetailView extends ReactComponent<Props> {
   //
   render() {
     //
-    const { userId, posting, anonymous } = this.props;
+    const { userId, posting, anonymous, onClickEdit, onClickRemove } = this.props;
 
     return (
       <Box mb={2}>
@@ -36,6 +38,8 @@ class PostingDetailView extends ReactComponent<Props> {
             renderAction={(targetPosting: Posting) => posting.writerId === userId && !posting.deleted && (
               <PostingAction
                 postingId={targetPosting.id}
+                onClickEdit={onClickEdit}
+                onClickRemove={onClickRemove}
               />
             )}
           />

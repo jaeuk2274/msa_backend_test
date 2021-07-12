@@ -39,15 +39,26 @@ class PostingListContentContainer extends ReactComponent<Props, {}, InjectedProp
   onToggle(posting: Posting) {
     //
     const { postingsStateKeeper } = this.injected;
-
     postingsStateKeeper.setPostingsProp(posting.id, 'expanded', !posting.expanded);
   }
 
   // TODO: 게시글 수정버튼 이벤트 함수 구현
-
+  onClickEdit(postingId: string) {
+    //
+    const { postingsStateKeeper } = this.injected;
+    postingsStateKeeper.setPostingsProp(postingId, 'editing', true);
+  }
 
   // TODO: 게시글 삭제버튼 이벤트 함수 구현
+  onClickRemove(postingId: string) {
+    //
+    const { postingStateKeeper } = this.injected;
+    const { onSuccess, onFail } = this.propsWithDefault;
 
+    postingStateKeeper.remove(postingId)
+      .then(onSuccess)
+      .catch(onFail);
+  }
 
   onModify(success: boolean) {
     //
@@ -89,6 +100,8 @@ class PostingListContentContainer extends ReactComponent<Props, {}, InjectedProp
         sourceEntityName={postingList.sourceEntityName}
         anonymous={false}
         onClickReplies={this.onToggle}
+        onClickEdit={this.onClickEdit}
+        onClickRemove={this.onClickRemove}
         onModify={this.onModify}
         writerName={writerName}
       />

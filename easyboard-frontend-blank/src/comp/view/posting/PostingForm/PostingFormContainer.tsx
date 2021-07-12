@@ -61,7 +61,7 @@ class PostingFormContainer extends ReactComponent<Props, {}, InjectedProps> {
     // TODO: postingStateKeeper의 posting 값 설정
     //  1. props의 postingId가 있을 경우, postingId에 대한 posting 검색 후 설정
     //  2. props의 postingId가 undefined일 경우, boardId, userId, writerName으로 posting 설정
-    const { postingId } = this.props;
+    const { postingId } = this.propsWithDefault;
     const { postingStateKeeper } = this.injected;
     if(postingId){
       postingStateKeeper.findPostingById(postingId);

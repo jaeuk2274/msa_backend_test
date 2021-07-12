@@ -15,10 +15,9 @@ interface InjectedProps {
 class IndexPage extends ReactComponent<Props, {}, InjectedProps> {
   //
   componentDidMount() {
-    //
-
     // TODO: home 페이지로 이동
-
+    const { router } = this.props;
+    router.push('/postings/home');
   }
 
   render() {

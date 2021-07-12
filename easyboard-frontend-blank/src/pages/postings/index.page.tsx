@@ -18,15 +18,15 @@ class PostingListPage extends ReactComponent<Props> {
   }
 
   routeToEdit(postingId: string) {
-    //
     // TODO: 게시글 수정 페이지로 이동
-
+    const { router } = this.props;
+    router.push('/postings/edot');
   }
 
   routeToRegistration() {
-    //
     // TODO: 게시글 등록 페이지로 이동
-
+    const { router } = this.props;
+    router.push('/postings/new');
   }
 
   render() {
@@ -58,7 +58,7 @@ class PostingListPage extends ReactComponent<Props> {
                   <SubActions>
                     <SubActions.Left>
                       {/* TODO: 게시글 등록 페이지(/postings/new)로 이동하는 버튼 구현 */}
-
+                      <Button onClick={this.routeToRegistration}>Posting</Button>
                     </SubActions.Left>
                   </SubActions>
                   <PostingList.Header />

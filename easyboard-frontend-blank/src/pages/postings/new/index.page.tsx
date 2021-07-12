@@ -16,9 +16,9 @@ interface InjectedProps {
 class PostingRegistrationPage extends ReactComponent<Props, {}, InjectedProps> {
   //
   routeToList() {
-    //
     // TODO: 게시글 목록 페이지로 이동
-
+    const { router } = this.props;
+    router.push('/postings');
   }
 
   render() {

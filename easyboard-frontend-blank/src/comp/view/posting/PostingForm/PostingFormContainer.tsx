@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { autobind, DramaException, ReactComponent, ServiceInjector } from '@nara.drama/prologue';
 import { PostingStateKeeper } from '../../../state';
 import PostingFormView from './view/PostingFormView';
+import { Posting } from '~/comp/api';
 
 
 interface Props {
@@ -60,13 +61,23 @@ class PostingFormContainer extends ReactComponent<Props, {}, InjectedProps> {
     // TODO: postingStateKeeper의 posting 값 설정
     //  1. props의 postingId가 있을 경우, postingId에 대한 posting 검색 후 설정
     //  2. props의 postingId가 undefined일 경우, boardId, userId, writerName으로 posting 설정
-
+    const { postingId } = this.props;
+    const { postingStateKeeper } = this.injected;
+    if(postingId){
+      postingStateKeeper.findPostingById(postingId);
+    } else {
+      const { boardId, userId, writerName } = this.props;
+      postingStateKeeper.initPosting(userId, writerName, boardId);
+    }
   }
 
   onChange(event: React.ChangeEvent<HTMLInputElement>) {
-    //
     // TODO: 게시글의 property 수정
+    const name = event.target.name as keyof Posting;
+    const value = event.target.value;
 
+    const { postingStateKeeper } = this.injected;
+    postingStateKeeper.setPostingProp(name, value);
   }
 
   async onResetPosting(event: React.MouseEvent) {
@@ -80,13 +91,14 @@ class PostingFormContainer extends ReactComponent<Props, {}, InjectedProps> {
     const { postingStateKeeper } = this.injected;
     const { posting } = postingStateKeeper;
 
-
     if (!posting) {
       throw new DramaException('PostingForm', 'Posting should not be null.');
     }
 
     // TODO: Posting 저장 후 결과에 따라 onSuccess/onFail 실행
-
+    postingStateKeeper.register(posting)
+                      .then(onSuccess)
+                      .catch(onFail);
 
     await this.initPosting();
   }

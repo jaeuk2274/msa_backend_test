@@ -2,7 +2,6 @@ import io.naradrama.easyboard.EasyboardBootApplication;
 import io.naradrama.easyboard.aggregate.posting.domain.entity.Posting;
 import io.naradrama.easyboard.aggregate.posting.domain.entity.sdo.PostingCdo;
 import io.naradrama.easyboard.aggregate.posting.domain.logic.PostingLogic;
-import io.naradrama.easyboard.aggregate.posting.exception.NotFoundEntityException;
 import io.naradrama.prologue.domain.NameValue;
 import io.naradrama.prologue.domain.NameValueList;
 import io.naradrama.prologue.domain.Offset;

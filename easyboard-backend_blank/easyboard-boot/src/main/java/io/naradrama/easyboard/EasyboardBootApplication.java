@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class EasyboardBootApplication {
     //
     public static void main(String[] args) {
-        // commit test
+        //
         SpringApplication.run(EasyboardBootApplication.class, args);
     }
 }

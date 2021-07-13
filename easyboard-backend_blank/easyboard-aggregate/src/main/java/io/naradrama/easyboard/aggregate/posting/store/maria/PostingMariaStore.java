@@ -49,7 +49,7 @@ public class PostingMariaStore implements PostingStore {
     public Posting retrieve(String id) {
         //
         return postingMariaRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Posting Not Found " + id))
+                .orElseThrow(() -> new IllegalArgumentException("Posting Not Found " + id))
                 .toDomain();
     }
 

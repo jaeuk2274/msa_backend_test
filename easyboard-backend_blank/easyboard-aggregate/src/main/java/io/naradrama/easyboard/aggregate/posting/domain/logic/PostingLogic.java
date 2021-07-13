@@ -65,7 +65,6 @@ public class PostingLogic {
         //  1. Save entity from cdo when entity was not exists
         //  2. Return registered entity's id
         Posting posting = new Posting(postingCdo);
-        // TODO
         postingMariaStore.create(posting);
 
         return posting.getId();
@@ -98,7 +97,7 @@ public class PostingLogic {
     public void modifyPosting(String postingId, NameValueList nameValues) {
         // TODO
         //  1. Modify entity: ID and nameValues
-        Posting posting = new Posting(postingId);
+        Posting posting = findPosting(postingId);
         posting.modifyValues(nameValues);
         modifyPosting(posting);
     }

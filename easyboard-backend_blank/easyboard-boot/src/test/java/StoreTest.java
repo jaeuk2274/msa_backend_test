@@ -1,15 +1,20 @@
 import io.naradrama.easyboard.EasyboardBootApplication;
 import io.naradrama.easyboard.aggregate.posting.domain.entity.Posting;
 import io.naradrama.easyboard.aggregate.posting.store.PostingStore;
+import io.naradrama.prologue.domain.NameValue;
+import io.naradrama.prologue.domain.NameValueList;
 import io.naradrama.prologue.domain.Offset;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Transactional
 @SpringBootTest(classes = EasyboardBootApplication.class)
@@ -24,7 +29,7 @@ public class StoreTest {
     @BeforeAll
     public void initPosting() {
         Posting sample = Posting.sample();
-        sample.setContent(sample.getContent().substring(0, 100));
+        //sample.setContent(sample.getContent().substring(0, 100));
         sample.setBase64AttachedImage(sample.getBase64AttachedImage().substring(0, 100));
         this.posting = sample;
     }
@@ -56,9 +61,14 @@ public class StoreTest {
 
     @Test
     public void deleteTest() {
+        //
         postingStore.delete(this.posting.getId());
-
-        Assertions.assertNull(postingStore.retrieve(this.posting.getId()));
+        // NOTE: add throw exception
+        assertThrows(Exception.class, () -> {
+            Posting posting = postingStore.retrieve(this.posting.getId());
+            Assertions.assertNull(posting);
+        });
+        //Assertions.assertNull(postingStore.retrieve(this.posting.getId()));
     }
 
     @Nested
@@ -71,12 +81,13 @@ public class StoreTest {
         public void initPostings() {
             this.postingList = new ArrayList<>();
             Posting sample1 = Posting.sample();
-            sample1.setContent(sample1.getContent().substring(0, 100));
+            // NOTE: sample() content -> "Post and title";
+            // sample1.setContent(sample1.getContent().substring(0, 100));
             sample1.setBase64AttachedImage(sample1.getBase64AttachedImage().substring(0, 100));
             sample1.setBoardId(boardId);
             this.postingList.add(sample1);
             Posting sample2 = Posting.sample();
-            sample2.setContent(sample2.getContent().substring(0, 100));
+            // sample2.setContent(sample2.getContent().substring(0, 100));
             sample2.setBase64AttachedImage(sample2.getBase64AttachedImage().substring(0, 100));
             sample2.setBoardId(boardId);
             this.postingList.add(sample2);
@@ -96,20 +107,21 @@ public class StoreTest {
             Assertions.assertEquals(2, postingsAsTwo.size());
         }
 
-//        @Test
-//        public void retrieveAllByFeedBackIdTest() {
-//            //
-//            List<Posting> postings = postingStore.retrieveAllByFeedbackId(boardId);
-//            Assertions.assertEquals(2, postings.size());
-//        }
-//
-//        @Test
-//        public void deleteAllByFeedBackIdTest() {
-//            //
-//            List<Posting> postings = postingStore.deleteByFeedbackId(boardId);
-//            Assertions.assertEquals(2, postings.size());
-//            List<Posting> postingsExpectedEmpty = postingStore.retrieveAllByFeedbackId(boardId);
-//            Assertions.assertEquals(0, postingsExpectedEmpty.size());
-//        }
+        // NOTE:
+        @Test
+        public void retrieveAllByBoardIdTest() {
+            //
+            List<Posting> postings = postingStore.retrieveAllByBoardId(boardId);
+            Assertions.assertEquals(2, postings.size());
+        }
+
+        @Test
+        public void deleteAllByBoardIdTest() {
+            //
+            List<Posting> postings = postingStore.deleteByBoardId(boardId);
+            Assertions.assertEquals(2, postings.size());
+            List<Posting> postingsExpectedEmpty = postingStore.retrieveAllByBoardId(boardId);
+            Assertions.assertEquals(0, postingsExpectedEmpty.size());
+        }
     }
 }

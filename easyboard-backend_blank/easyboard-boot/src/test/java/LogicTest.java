@@ -2,6 +2,7 @@ import io.naradrama.easyboard.EasyboardBootApplication;
 import io.naradrama.easyboard.aggregate.posting.domain.entity.Posting;
 import io.naradrama.easyboard.aggregate.posting.domain.entity.sdo.PostingCdo;
 import io.naradrama.easyboard.aggregate.posting.domain.logic.PostingLogic;
+import io.naradrama.easyboard.aggregate.posting.exception.NotFoundEntityException;
 import io.naradrama.prologue.domain.NameValue;
 import io.naradrama.prologue.domain.NameValueList;
 import io.naradrama.prologue.domain.Offset;
@@ -13,6 +14,8 @@ import org.springframework.test.annotation.Rollback;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Transactional
 @SpringBootTest(classes = EasyboardBootApplication.class)
@@ -28,7 +31,8 @@ public class LogicTest {
     @Rollback(value = false)
     public void registerTest() {
         PostingCdo postingCdo = PostingCdo.sample();
-        postingCdo.setContent(postingCdo.getContent().substring(0, 100));
+        // NOTE: sample() content -> "Post and title";
+        // postingCdo.setContent(postingCdo.getContent().substring(0, 100));
         postingCdo.setBase64AttachedImage(postingCdo.getBase64AttachedImage().substring(0, 100));
         this.postingId = postingLogic.registerPosting(postingCdo);
 
@@ -39,11 +43,16 @@ public class LogicTest {
     @Test
     public void modifyWithNameValueListTest() {
         String modifiedMessage = "modifiedByNameValueList";
-        NameValueList nameValueList = new NameValueList().add(new NameValue("message", modifiedMessage));
+        // NOTE: only change 'title', 'content', 'base64AttachedImage', 'important'
+        assertThrows(Exception.class, () -> {
+            NameValueList nameValueList = new NameValueList().add(new NameValue("message", modifiedMessage));
+            postingLogic.modifyPosting(this.postingId, nameValueList);
+        });
+
+        NameValueList nameValueList = new NameValueList().add(new NameValue("content", modifiedMessage));
         postingLogic.modifyPosting(this.postingId, nameValueList);
 
         Posting posting = postingLogic.findPosting(this.postingId);
-
         Assertions.assertEquals(modifiedMessage, posting.getContent());
     }
 
@@ -63,7 +72,7 @@ public class LogicTest {
     public void removeTest() {
         postingLogic.removePosting(this.postingId);
 
-        Assertions.assertThrows(Exception.class, () -> {
+        assertThrows(Exception.class, () -> {
             postingLogic.findPosting(postingId);
         });
     }
@@ -77,12 +86,12 @@ public class LogicTest {
             List<PostingCdo> cdos = new ArrayList<>();
 
             PostingCdo cdo_1 = PostingCdo.sample();
-            cdo_1.setContent(cdo_1.getContent().substring(0, 100));
+            // cdo_1.setContent(cdo_1.getContent().substring(0, 100));
             cdo_1.setBase64AttachedImage(cdo_1.getBase64AttachedImage().substring(0, 100));
             cdos.add(cdo_1);
 
             PostingCdo cdo_2 = PostingCdo.sample();
-            cdo_2.setContent(cdo_2.getContent().substring(0, 100));
+            // cdo_2.setContent(cdo_2.getContent().substring(0, 100));
             cdo_2.setBase64AttachedImage(cdo_2.getBase64AttachedImage().substring(0, 100));
             cdos.add(cdo_2);
 
@@ -102,6 +111,7 @@ public class LogicTest {
 
         @AfterAll
         public void resetData() {
+            //
             this.postingIds.forEach(id -> postingLogic.removePosting(id));
         }
     }

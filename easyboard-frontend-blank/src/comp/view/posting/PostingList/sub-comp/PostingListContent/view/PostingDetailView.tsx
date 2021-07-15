@@ -6,7 +6,7 @@ import { Box } from '@nara.platform/react-ui';
 import { Posting } from '~/comp/api';
 import { PostingAction } from '~/comp/view/shared';
 import PostingDetail from '../../../../PostingDetail';
-import {PostingForm} from "~/comp/view";
+import { PostingForm } from "~/comp/view";
 
 
 interface Props {

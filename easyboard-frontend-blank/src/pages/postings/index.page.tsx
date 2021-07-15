@@ -30,7 +30,7 @@ class PostingListPage extends ReactComponent<Props> {
   }
 
   render() {
-    //
+    // insomnia doc: boardId
     const sourceEntityId = 'testBoardId';
     const sourceEntityName = 'Namoosori';
     const userId = 'manager@nextree.io';

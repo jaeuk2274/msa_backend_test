@@ -40,7 +40,7 @@ class PostingListContainer extends ReactComponent<Props, {}, InjectedProps> {
     limit: 15,
     showDeleted: false,
     writerName: '',
-    onInit: () => {},
+    onInit: (totalCount: number) => { console.log(`총 카운트: ${totalCount}`) },
   };
 
   componentDidMount() {
@@ -73,15 +73,13 @@ class PostingListContainer extends ReactComponent<Props, {}, InjectedProps> {
     targetOffset.sortingField = 'time';
 
     // TODO: 특정 조건을 만족할 경우, 게시글 목록에서 삭제된 글까지 확인할 수 있도록 허용하는 코드 구현
-    let offsetPostingList;
-    if(showDeleted){
-      offsetPostingList = await postingsStateKeeper.findNotDeletedPostingsByBoardId(sourceEntityId, targetOffset);
-    } else{
-      offsetPostingList = await postingsStateKeeper.findPostingsByBoardId(sourceEntityId, targetOffset);
-    }
-    onInit(offsetPostingList.totalCount);
-    // TODO
+    const offsetPostingList = showDeleted
+                            ? await postingsStateKeeper.findPostingsByBoardId(sourceEntityId, targetOffset)
+                            : await postingsStateKeeper.findNotDeletedPostingsByBoardId(sourceEntityId, targetOffset);
 
+
+    // NOTE: 요구사항 문서에는 없어서 미구현 / 총 카운트 표시? 
+    onInit(offsetPostingList.totalCount);
   }
 
   getContext(): PostingListContextModel {

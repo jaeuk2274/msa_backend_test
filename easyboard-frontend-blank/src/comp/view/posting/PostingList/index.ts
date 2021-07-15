@@ -4,7 +4,6 @@ import Header from './sub-comp/PostingListHeader';
 import Content from './sub-comp/PostingListContent';
 import ActionButton from './sub-comp/PostingListActionButton';
 
-
 type PostingListComponent = typeof PostingListContainer & {
   Header: typeof Header;
   Content: typeof Content;

@@ -23,7 +23,6 @@ class PostingEditPage extends ReactComponent<Props, {}, InjectedProps> {
   getFromPath() {
     //
     const { query } = this.props.router;
-
     return {
       postingId: query.postingId as string,
     };

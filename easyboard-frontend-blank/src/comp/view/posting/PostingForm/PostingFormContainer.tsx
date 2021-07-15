@@ -99,9 +99,8 @@ class PostingFormContainer extends ReactComponent<Props, {}, InjectedProps> {
     // TODO: Posting 저장 후 결과에 따라 onSuccess/onFail 실행
     postingStateKeeper.save(posting)
                       .then(onSuccess)
-                      .catch(onFail);
-
-    await this.initPosting();
+                      .catch(onFail)
+                      .finally(this.initPosting);
   }
 
   render() {
